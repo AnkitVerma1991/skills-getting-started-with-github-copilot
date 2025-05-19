@@ -51,7 +51,14 @@ def root():
 def get_activities():
     return activities
 
-
+def signup_for_activity(activity_name: str, email: str):
+    # ...existing code...
+    email = email.lower()
+    # Prevent duplicate registration
+    if email in [e.lower() for e in activity["participants"]]:
+        raise HTTPException(status_code=400, detail="Student is already signed up")
+    # Add student
+    activity["participants"].append(email)
 @app.get("/activities/{activity_name}") 
 @app.post("/activities/{activity_name}/signup")
 def signup_for_activity(activity_name: str, email: str):
